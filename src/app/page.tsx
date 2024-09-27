@@ -1,8 +1,8 @@
 "use client"
 
+import { Installation } from "@/components/installation";
 import { FaSpotify } from "react-icons/fa6"
 import { RiArrowRightUpLine } from "react-icons/ri"
-import { toast } from "sonner"
 
 export default function Home() {
   return (
@@ -31,11 +31,8 @@ export default function Home() {
         </section>
 
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-4">Overview</h2>
-          <p className="text-sm">
-            Hello
-          </p>
-          <button onClick={() => toast.success('Text copied')}>Render my toast</button>
+          <h2 className="text-2xl font-semibold mb-4">Installation</h2>
+          <Installation />
         </section>
 
         {/* <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">

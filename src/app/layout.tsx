@@ -28,9 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} mx-auto px-4 my-8 max-w-[550px] md:my-16 md:max-w-[900px]`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} mx-auto px-4 my-8 max-w-[550px] md:my-16 md:max-w-[800px]`}>
         {children}
-        <Toaster />
+        <Toaster richColors />
         <Footer />
       </body>
     </html>
