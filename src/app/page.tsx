@@ -1,6 +1,8 @@
 "use client"
 
-import { Installation } from "@/components/installation";
+import { Example } from "@/components/example"
+import { Installation } from "@/components/installation"
+import { Signature } from "@/components/signature"
 import { FaSpotify } from "react-icons/fa6"
 import { RiArrowRightUpLine } from "react-icons/ri"
 
@@ -33,6 +35,16 @@ export default function Home() {
         <section className="mb-12">
           <h2 className="text-2xl font-semibold mb-4">Installation</h2>
           <Installation />
+        </section>
+
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold mb-4">Signature</h2>
+          <Signature />
+        </section>
+
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold mb-4">Example</h2>
+          <Example />
         </section>
 
         {/* <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
