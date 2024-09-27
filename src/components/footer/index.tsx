@@ -3,9 +3,7 @@
 import React from "react"
 import { RiArrowRightUpLine } from "react-icons/ri"
 
-interface FooterProps { }
-
-const Footer: React.FC<FooterProps> = ({ }) => {
+const Footer: React.FC<{}> = ({ }) => {
     return (
         <footer className="pt-8">
             <hr className="h-px border-0 bg-neutral-300" />

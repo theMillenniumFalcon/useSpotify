@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -29,6 +30,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} mx-auto px-4 my-8 max-w-[550px] md:my-16 md:max-w-[900px]`}>
         {children}
+        <Toaster />
         <Footer />
       </body>
     </html>

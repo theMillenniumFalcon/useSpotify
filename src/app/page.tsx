@@ -1,5 +1,8 @@
-import { FaSpotify } from "react-icons/fa6";
+"use client"
+
+import { FaSpotify } from "react-icons/fa6"
 import { RiArrowRightUpLine } from "react-icons/ri"
+import { toast } from "sonner"
 
 export default function Home() {
   return (
@@ -30,8 +33,9 @@ export default function Home() {
         <section className="mb-12">
           <h2 className="text-2xl font-semibold mb-4">Overview</h2>
           <p className="text-sm">
-            The <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">useSpotify</code> hook provides an easy way to interact with the Spotify API in your React applications. It allows you to search for tracks, manage playback, and access user&apos;s Spotify data.
+            Hello
           </p>
+          <button onClick={() => toast.success('Text copied')}>Render my toast</button>
         </section>
 
         {/* <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
