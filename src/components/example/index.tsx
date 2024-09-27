@@ -1,13 +1,13 @@
 "use client"
 
-import { useSpotify } from "@/hooks/use-spotify"
+import { useSpotify, Playlist } from "@/hooks/use-spotify"
 import React, { useState } from "react"
 
 export const Example = () => {
     const userId = process.env.NEXT_PUBLIC_USER_ID as string
     const accessToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN as string
-    const { getAllPlaylists } = useSpotify(userId, accessToken);
-    const [playlists, setPlaylists] = useState([]);
+    const { getAllPlaylists } = useSpotify({userId, accessToken});
+    const [playlists, setPlaylists] = useState<Playlist[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -31,7 +31,7 @@ export const Example = () => {
       </button>
       {error && <div>Error: {error}</div>}
       <ul>
-        {playlists.map((playlist: any) => (
+        {playlists.map((playlist) => (
           <li key={playlist.id}>{playlist.name}</li>
         ))}
       </ul>
