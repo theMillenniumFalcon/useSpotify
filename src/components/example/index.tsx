@@ -1,24 +1,29 @@
 "use client"
 
-import { useSpotify, Playlist } from "@/hooks/use-spotify"
+import { useSpotify, PlaylistSong } from "@/hooks/use-spotify"
 import React, { useState } from "react"
 
 export const Example = () => {
     const userId = process.env.NEXT_PUBLIC_USER_ID as string
     const accessToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN as string
-    const { getAllPlaylists } = useSpotify({userId, accessToken});
-    const [playlists, setPlaylists] = useState<Playlist[]>([]);
+    const id = ""
+    const { getPlaylistSongs } = useSpotify({userId, accessToken, id});
+    const [songs, setSongs] = useState<PlaylistSong[]>([]);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
 
     const handleFetchPlaylists = async () => {
         setLoading(true);
         setError(null);
         try {
-            const fetchedPlaylists = await getAllPlaylists();
-            setPlaylists(fetchedPlaylists);
-        } catch (err: any) {
+            const fetchedSongs = await getPlaylistSongs();
+            setSongs(fetchedSongs);
+        } catch (err) {
+          if (err instanceof Error) {
             setError(err.message);
+          } else {
+              setError('An unknown error occurred');
+          }
         } finally {
             setLoading(false);
         }
@@ -27,12 +32,12 @@ export const Example = () => {
   return (
     <div>
       <button onClick={handleFetchPlaylists} disabled={loading}>
-        {loading ? 'Fetching...' : 'Fetch Playlists'}
+        {loading ? 'Fetching...' : 'Fetch Songs'}
       </button>
       {error && <div>Error: {error}</div>}
       <ul>
-        {playlists.map((playlist) => (
-          <li key={playlist.id}>{playlist.name}</li>
+        {songs.map((song) => (
+          <li key={song.track.id}>{song.track.name}</li>
         ))}
       </ul>
     </div>
