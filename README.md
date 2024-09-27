@@ -1,1 +1,1 @@
-React hook for fetching information via Spotify API 
+React hook for fetching information via Spotify API
