@@ -9,7 +9,7 @@ export const GetAllPlaylists = () => {
       <code className="block whitespace-pre-wrap break-all px-3 rounded text-xs md:text-sm relative h-auto items-center text-white">
             <div className="py-2">
 {`import React, { useState } from "react"
-import { useSpotify, SpotifyPlaylist } from "@/hooks/use-spotify"
+import { useSpotify, SpotifyPlaylist } from "usespotify-react"
 
 export const GetAllPlaylists = () => {
     const client_id = process.env.CLIENT_ID as string;

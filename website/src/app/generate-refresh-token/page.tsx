@@ -14,7 +14,7 @@ export default function GenerateRefreshToken() {
       <main className="font-[family-name:var(--font-geist-mono)]">
         <section className="mb-12">
           <h2 className="text-2xl font-semibold mb-8">Steps to generate Refresh Token:</h2>
-            <ol className="list-inside list-decimal text-xs md:text-sm text-left sm:text-left font-[family-name:var(--font-geist-mono)]">
+            <ol className="list-inside list-decimal text-xs md:text-sm text-left font-[family-name:var(--font-geist-mono)]">
                 <li className="mb-6">
                     Visit the spotify for developers website,{" "}
                     <a
@@ -83,7 +83,7 @@ export default function GenerateRefreshToken() {
                         https://www.base64encode.org
                     </a>.
                 </li>
-                <li className="mb-6">
+                <li>
                     Once the encoded string is generated, run the following cURL command:
                     <Curl />
                 </li>

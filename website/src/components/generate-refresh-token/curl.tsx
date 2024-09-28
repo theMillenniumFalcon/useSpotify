@@ -28,7 +28,7 @@ export const Curl = () => {
             <div className="my-2">
                 {`curl -H "Authorization: Basic <your base64 clientid:clientsecret>" -d grant_type=authorization_code -d code=<your_code> -d redirect_uri=http%3A%2F%2Flocalhost:3000 https://accounts.spotify.com/api/token`}
             </div>
-        <button aria-label="Copy code" className="absolute right-1.5 top-1/2 -translate-y-1/2 cursor-pointer rounded-md bg-white/[.1] text-white w-[26px] h-[26px] flex justify-center items-center">
+        <button aria-label="Copy code" className="absolute right-1.5 top-[17px] -translate-y-1/2 cursor-pointer rounded-md bg-white/[.1] text-white w-[26px] h-[26px] flex justify-center items-center">
           <MotionConfig transition={{ duration: 0.15 }}>
             <AnimatePresence initial={false} mode="wait">
               {copying ? (
