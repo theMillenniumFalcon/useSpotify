@@ -8,7 +8,7 @@ const Footer = () => {
             <hr className="h-px border-0 bg-neutral-300" />
             <div className="mx-1 flex justify-end pt-4">
                 <p className="text-xs">
-                    Made with ❤️ by{" "}
+                    Built with ❤️ by{" "}
                     <a
                         href="https://nishank.vercel.app"
                         rel="noopenner noreferrer"
