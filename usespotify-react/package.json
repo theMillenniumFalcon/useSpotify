@@ -1,13 +1,13 @@
 {
-  "name": "usespotify",
-  "version": "1.0.0",
+  "name": "usespotify-react",
+  "version": "1.0.2",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
     "rollup": "rollup -c --bundleConfigAsCjs"
   },
-  "keywords": [],
+  "keywords": ["react", "spotify", "spotify-api"],
   "author": "",
   "license": "ISC",
   "description": "",
