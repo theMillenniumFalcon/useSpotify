@@ -1,9 +1,17 @@
 "use client"
 
-import React, { useState } from "react"
+import React from "react"
+
+export const GetCurrentlyPlayingSong = () => {
+
+  return (
+    <div className="bg-white/[.1] px-1 rounded mt-1 mb-6">
+      <code className="block whitespace-pre-wrap break-all px-3 rounded text-xs md:text-sm relative h-auto items-center text-white">
+            <div className="py-2">
+{`import React, { useState } from "react"
 import { useSpotify, SpotifyTrack } from "@/hooks/use-spotify"
 
-export const Example = () => {
+export const GetCurrentlyPlayingSong = () => {
   const user_id = process.env.NEXT_PUBLIC_USER_ID as string
   const client_id = process.env.NEXT_PUBLIC_CLIENT_ID as string
   const client_secret = process.env.NEXT_PUBLIC_CLIENT_SECRET as string
@@ -40,6 +48,11 @@ export const Example = () => {
       <div>
         {currentSong === null ? <>No song playing</> : <>{currentSong!.name}</>}
       </div>
+    </div>
+  )
+}`}
+            </div>
+      </code>
     </div>
   )
 }
