@@ -30,7 +30,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} mx-auto px-4 my-8 max-w-[550px] md:my-16 md:max-w-[800px]`}>
         {children}
-        <Toaster richColors />
+        <Toaster
+          toastOptions={{
+            style: {
+              background: '#232323',
+              color: 'white',
+              border: '#232323'
+            },
+          }}
+        />
         <Footer />
       </body>
     </html>
