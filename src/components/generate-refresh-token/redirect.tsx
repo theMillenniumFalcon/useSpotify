@@ -14,7 +14,7 @@ export const Redirect = () => {
   const [copying, setCopying] = useState(0)
 
   const onCopy = useCallback(() => {
-    copy("http://localhost:3000/?code=<your_code>")
+    copy(`http://localhost:3000/?code=<your_code>`)
     toast.success('Text copied')
     setCopying((c) => c + 1)
     setTimeout(() => {
@@ -24,8 +24,10 @@ export const Redirect = () => {
 
   return (
     <div className="border border-white/[.1] px-1 rounded text-sm mt-1">
-      <code className="px-3 pr-[62px] rounded text-sm relative cursor-copy h-10 flex items-center text-white" onClick={onCopy}>
-        {"http://localhost:3000/?code=<your_code>"}
+      <code className="block whitespace-pre-wrap break-all px-3 pr-[62px] rounded text-sm relative cursor-copy h-auto items-center text-white" onClick={onCopy}>
+            <div className="my-1 md:my-2">
+                {`http://localhost:3000/?code=<your_code>`}
+            </div>
         <button aria-label="Copy code" className="absolute right-1.5 top-1/2 -translate-y-1/2 cursor-pointer rounded-md bg-white/[.1] text-white w-[26px] h-[26px] flex justify-center items-center">
           <MotionConfig transition={{ duration: 0.15 }}>
             <AnimatePresence initial={false} mode="wait">
