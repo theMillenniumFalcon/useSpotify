@@ -48,10 +48,10 @@ export default function GenerateRefreshToken() {
                 <Redirect />
             </li>
             <li className="mb-4">
-                To obtain a refresh token, you'll need to create a base64 encoded string.
+                To obtain a refresh token, you&apos;ll need to create a base64 encoded string.
                 This string should combine your client ID and client secret in the format{" "}
                 <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">
-                    'clientid:clientsecret'
+                    &apos;clientid:clientsecret&apos;
                 </code>
                 . To generate the string, you can use an online encoder
                 such as{" "}

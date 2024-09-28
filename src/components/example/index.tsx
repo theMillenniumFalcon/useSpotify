@@ -1,7 +1,7 @@
 "use client"
 
 import { useSpotify, SpotifyTrack } from "@/hooks/use-spotify"
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 
 export const Example = () => {
     // const user_id = process.env.NEXT_PUBLIC_USER_ID as string
