@@ -4,6 +4,7 @@ import { Example } from "@/components/example"
 import { GenerateUserID } from "@/components/generateUserID"
 import { Installation } from "@/components/installation"
 import { Signature } from "@/components/signature"
+import Link from "next/link"
 import { FaSpotify } from "react-icons/fa6"
 import { RiArrowRightUpLine } from "react-icons/ri"
 
@@ -47,6 +48,19 @@ export default function Home() {
           <GenerateUserID />
           <p className="text-sm mt-2">
             userId can be found as the value of the key "id"
+          </p>
+        </section>
+
+        <section className="mb-12">
+          <p className="text-sm">
+            Can view this to{" "}
+            <Link
+              href="/generate-refresh-token"
+              className="underline underline-offset-4"
+            >
+              generate refresh token
+            </Link>
+            .
           </p>
         </section>
 
