@@ -47,7 +47,7 @@ export default function Home() {
           </p>
           <GenerateUserID />
           <p className="text-sm mt-2">
-            userId can be found as the value of the key "id"
+            userId can be found as the value of the key &quot;id&quot;
           </p>
         </section>
 
