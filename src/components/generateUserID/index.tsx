@@ -10,11 +10,11 @@ const variants = {
   hidden: { opacity: 0, scale: 0.5 },
 }
 
-export const Installation = () => {
+export const GenerateUserID = () => {
   const [copying, setCopying] = useState(0)
 
   const onCopy = useCallback(() => {
-    copy("npm install usespotify")
+    copy("curl --request GET --url https://api.spotify.com/v1/me --header 'Authorization: Bearer <<AUTH_TOKEN>>'")
     toast.success('Text copied')
     setCopying((c) => c + 1)
     setTimeout(() => {
@@ -23,9 +23,9 @@ export const Installation = () => {
   }, [])
 
   return (
-    <div className="border border-white/[.1] px-1 rounded text-sm">
+    <div className="border border-white/[.1] px-1 rounded text-sm mx-4">
       <code className="px-3 pr-[62px] rounded text-sm relative cursor-copy h-10 flex items-center text-white" onClick={onCopy}>
-        npm install usespotify
+      {"curl --request GET --url https://api.spotify.com/v1/me --header 'Authorization: Bearer <<AUTH_TOKEN>>'"}
         <button aria-label="Copy code" className="absolute right-1.5 top-1/2 -translate-y-1/2 cursor-pointer rounded-md bg-white/[.1] text-white w-[26px] h-[26px] flex justify-center items-center">
           <MotionConfig transition={{ duration: 0.15 }}>
             <AnimatePresence initial={false} mode="wait">

@@ -1,6 +1,7 @@
 "use client"
 
 import { Example } from "@/components/example"
+import { GenerateUserID } from "@/components/generateUserID"
 import { Installation } from "@/components/installation"
 import { Signature } from "@/components/signature"
 import { FaSpotify } from "react-icons/fa6"
@@ -40,6 +41,13 @@ export default function Home() {
         <section className="mb-12">
           <h2 className="text-2xl font-semibold mb-4">Signature</h2>
           <Signature />
+          <p className="text-sm mt-4 mb-2">
+            To generate userId:
+          </p>
+          <GenerateUserID />
+          <p className="text-sm mt-2">
+            userId can be found as the value of the key "id"
+          </p>
         </section>
 
         <section className="mb-12">
