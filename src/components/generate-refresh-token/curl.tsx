@@ -23,8 +23,8 @@ export const Curl = () => {
   }, [])
 
   return (
-    <div className="border border-white/[.1] px-1 rounded text-sm mt-1">
-      <code className="block whitespace-pre-wrap break-all px-3 pr-[62px] rounded text-sm relative cursor-copy h-auto items-center text-white" onClick={onCopy}>
+    <div className="border border-white/[.1] px-1 rounded mt-1">
+      <code className="block whitespace-pre-wrap break-all px-3 pr-[62px] rounded text-xs md:text-sm relative cursor-copy h-auto items-center text-white" onClick={onCopy}>
             <div className="my-1">
                 {`curl -H "Authorization: Basic <your base64 clientid:clientsecret>" -d grant_type=authorization_code -d code=<your_code> -d redirect_uri=http%3A%2F%2Flocalhost:3000 https://accounts.spotify.com/api/token`}
             </div>

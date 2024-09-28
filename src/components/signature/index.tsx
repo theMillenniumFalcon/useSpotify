@@ -14,7 +14,7 @@ export const Signature = () => {
   const [copying, setCopying] = useState(0)
 
   const onCopy = useCallback(() => {
-    copy("npm install usespotify")
+    copy(`const { getAllPlaylists } = useSpotify({ userId, accessToken })`)
     toast.success('Text copied')
     setCopying((c) => c + 1)
     setTimeout(() => {
@@ -23,9 +23,11 @@ export const Signature = () => {
   }, [])
 
   return (
-    <div className="border border-white/[.1] px-1 rounded text-sm">
-      <code className="px-3 pr-[62px] rounded text-sm relative cursor-copy h-10 flex items-center text-white" onClick={onCopy}>
-      {"const { getAllPlaylists } = useSpotify({ userId, accessToken })"}
+    <div className="border border-white/[.1] px-1 rounded mt-1">
+      <code className="block whitespace-pre-wrap break-all px-3 pr-[62px] rounded text-xs md:text-sm relative cursor-copy h-auto items-center text-white" onClick={onCopy}>
+            <div className="my-1 md:my-2">
+                {`const { getAllPlaylists } = useSpotify({ userId, accessToken })`}
+            </div>
         <button aria-label="Copy code" className="absolute right-1.5 top-1/2 -translate-y-1/2 cursor-pointer rounded-md bg-white/[.1] text-white w-[26px] h-[26px] flex justify-center items-center">
           <MotionConfig transition={{ duration: 0.15 }}>
             <AnimatePresence initial={false} mode="wait">

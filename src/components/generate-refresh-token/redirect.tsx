@@ -23,8 +23,8 @@ export const Redirect = () => {
   }, [])
 
   return (
-    <div className="border border-white/[.1] px-1 rounded text-sm mt-1">
-      <code className="block whitespace-pre-wrap break-all px-3 pr-[62px] rounded text-sm relative cursor-copy h-auto items-center text-white" onClick={onCopy}>
+    <div className="border border-white/[.1] px-1 rounded mt-1">
+      <code className="block whitespace-pre-wrap break-all px-3 pr-[62px] rounded text-xs md:text-sm relative cursor-copy h-auto items-center text-white" onClick={onCopy}>
             <div className="my-1 md:my-2">
                 {`http://localhost:3000/?code=<your_code>`}
             </div>

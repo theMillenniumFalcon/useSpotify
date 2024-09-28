@@ -17,7 +17,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "useSpotify()",
+  title: "useSpotify",
   description: "React hook for fetching information via Spotify API",
 };
 

@@ -2,9 +2,9 @@ import { useCallback } from "react"
 import {
     UseSpotifyHookProps,
     PlaylistsResponse,
-    Playlist,
+    SpotifyPlaylist,
     PlaylistSongsResponse,
-    PlaylistSong,
+    SpotifyPlaylistSong,
     CurrentlyPlayingResponse,
     SpotifyTokenResponse 
 } from "./types"
@@ -12,79 +12,13 @@ import {
 const SPOTIFY_REST_URL: string = "https://api.spotify.com" as const
 
 export const useSpotify = ({
-    user_id,
     client_id,
     client_secret,
+    refresh_token,
+    user_id,
     playlist_id,
-    refresh_token
 }: UseSpotifyHookProps) => {
     const authorization = Buffer.from(`${client_id ?? ''}:${client_secret ?? ''}`).toString('base64')
-
-    const getAllPlaylists: () => Promise<Playlist[]> = useCallback(async () => {
-        try {
-            if (!user_id || user_id === "") {
-                throw new Error(`Invalid user ID: Expected a non-empty string, but received ${JSON.stringify(user_id)}`)
-            }
-    
-            const response = await fetch(`${SPOTIFY_REST_URL}/v1/users/${user_id}/playlists`, {
-                headers: {
-                    "Authorization": `Bearer ${authorization}`,
-                },
-            })
-    
-            if (!response.ok) {
-                throw new Error(`Failed to fetch playlists: ${response.status} ${response.statusText}`)
-            }
-    
-            const data: PlaylistsResponse = await response.json()
-            return data.items
-        } catch (error) {
-            let errorMessage = `Failed to retrieve playlists for user ${user_id || "${userId}"}`
-            if (error instanceof Error) {
-                errorMessage += `: ${error.message}`
-            } else if (typeof error === "string") {
-                errorMessage += `: ${error}`
-            } else {
-                errorMessage += ": An unknown error occurred"
-            }
-            console.error(`Error fetching playlists for user ${user_id}:`, error)
-            throw new Error(errorMessage)
-        }
-    }, [user_id, authorization])
-
-    const getPlaylistSongs: () => Promise<PlaylistSong[]> = useCallback(async () => {
-        try {
-            if (!playlist_id || playlist_id === "") {
-                throw new Error(`Invalid playlist ID: Expected a non-empty string, but received ${JSON.stringify(playlist_id)}`)
-            }
-
-            const response = await fetch(`${SPOTIFY_REST_URL}/v1/playlists/${playlist_id}/tracks`, {
-                headers: {
-                    "Authorization": `Bearer ${authorization}`,
-                },
-            })
-    
-            if (!response.ok) {
-                throw new Error(`Failed to fetch playlist tracks: ${response.status} ${response.statusText}`)
-            }
-        
-            const data: PlaylistSongsResponse = await response.json()
-            return data.items
-        } catch (error) {
-            let errorMessage = `Failed to retrieve tracks for playlist ${playlist_id || "${id}"}`
-
-            if (error instanceof Error) {
-                errorMessage += `: ${error.message}`
-            } else if (typeof error === "string") {
-                errorMessage += `: ${error}`
-            } else {
-                errorMessage += ": An unknown error occurred"
-            }
-
-            console.error(`Error fetching tracks for playlist ${playlist_id}:`, error)
-            throw new Error(errorMessage)
-        }
-    }, [authorization])
 
     const getAccessToken = async (): Promise<string> => {
         if (!refresh_token || refresh_token.trim() === "") {
@@ -92,8 +26,8 @@ export const useSpotify = ({
         }
       
         const params = new URLSearchParams({
-          grant_type: "refresh_token",
-          refresh_token: refresh_token
+            grant_type: "refresh_token",
+            refresh_token: refresh_token
         })
       
         try {
@@ -131,6 +65,84 @@ export const useSpotify = ({
             throw new Error(errorMessage)
         }
     }
+
+    const getAllPlaylists: () => Promise<SpotifyPlaylist[]> = useCallback(async () => {
+        try {
+            const access_token = await getAccessToken()
+
+            if (!access_token) {
+                throw new Error("Access token is missing or invalid")
+            }
+
+            if (!user_id || user_id.trim() === "") {
+                throw new Error(`Invalid user ID: Expected a non-empty string, but received ${JSON.stringify(user_id)}`)
+            }
+    
+            const response = await fetch(`${SPOTIFY_REST_URL}/v1/users/${user_id}/playlists`, {
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                },
+            })
+    
+            if (!response.ok) {
+                throw new Error(`Failed to fetch playlists: ${response.status} ${response.statusText}`)
+            }
+    
+            const data: PlaylistsResponse = await response.json()
+            return data.items
+        } catch (error) {
+            let errorMessage = `Failed to retrieve playlists for user ${user_id || "${userId}"}`
+            if (error instanceof Error) {
+                errorMessage += `: ${error.message}`
+            } else if (typeof error === "string") {
+                errorMessage += `: ${error}`
+            } else {
+                errorMessage += ": An unknown error occurred"
+            }
+            console.error(`Error fetching playlists for user ${user_id}:`, error)
+            throw new Error(errorMessage)
+        }
+    }, [user_id, authorization])
+
+    const getPlaylistSongs: () => Promise<SpotifyPlaylistSong[]> = useCallback(async () => {
+        try {
+            const access_token = await getAccessToken()
+
+            if (!access_token) {
+                throw new Error("Access token is missing or invalid")
+            }
+
+            if (!playlist_id || playlist_id === "") {
+                throw new Error(`Invalid playlist ID: Expected a non-empty string, but received ${JSON.stringify(playlist_id)}`)
+            }
+
+            const response = await fetch(`${SPOTIFY_REST_URL}/v1/playlists/${playlist_id}/tracks`, {
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                },
+            })
+    
+            if (!response.ok) {
+                throw new Error(`Failed to fetch playlist tracks: ${response.status} ${response.statusText}`)
+            }
+        
+            const data: PlaylistSongsResponse = await response.json()
+            return data.items
+        } catch (error) {
+            let errorMessage = `Failed to retrieve tracks for playlist ${playlist_id || "${id}"}`
+
+            if (error instanceof Error) {
+                errorMessage += `: ${error.message}`
+            } else if (typeof error === "string") {
+                errorMessage += `: ${error}`
+            } else {
+                errorMessage += ": An unknown error occurred"
+            }
+
+            console.error(`Error fetching tracks for playlist ${playlist_id}:`, error)
+            throw new Error(errorMessage)
+        }
+    }, [authorization])
 
     const getCurrentlyPlayingSong = useCallback(async () => {
         try {

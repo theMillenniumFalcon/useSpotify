@@ -1,9 +1,9 @@
 export interface UseSpotifyHookProps {
-    user_id?: string;
     client_id: string;
     client_secret: string;
+    refresh_token: string;
+    user_id?: string;
     playlist_id?: string;
-    refresh_token?: string;
 }
 
 export interface PlaylistsResponse {
@@ -13,10 +13,10 @@ export interface PlaylistsResponse {
     offset: number;
     previous: string | null;
     total: number;
-    items: Playlist[];
+    items: SpotifyPlaylist[];
 }
 
-export interface Playlist {
+export interface SpotifyPlaylist {
     collaborative: boolean;
     description: string;
     external_urls: {
@@ -53,10 +53,10 @@ export interface Playlist {
 
 export interface PlaylistSongsResponse {
     href: string;
-    items: PlaylistSong[];
+    items: SpotifyPlaylistSong[];
 }
 
-export interface PlaylistSong {
+export interface SpotifyPlaylistSong {
     added_at: string;
     added_by: {
       external_urls: {

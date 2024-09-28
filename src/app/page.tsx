@@ -34,12 +34,12 @@ export default function Home() {
         </section>
 
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-4">Installation</h2>
+          <h2 className="text-xl md:text-2xl font-semibold mb-4">Installation</h2>
           <Installation />
         </section>
 
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-4">Signature</h2>
+          <h2 className="text-xl md:text-2xl font-semibold mb-4">Signature</h2>
           <Signature />
           <p className="text-sm mt-4">
             To generate userId:

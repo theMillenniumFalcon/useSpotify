@@ -1,6 +1,6 @@
 "use client"
 
-import { useSpotify, SpotifyTrack } from "@/hooks/use-spotify"
+import { useSpotify, SpotifyPlaylistSong } from "@/hooks/use-spotify"
 import React, { useState } from "react"
 
 export const Example = () => {
@@ -8,18 +8,18 @@ export const Example = () => {
     const client_id = process.env.NEXT_PUBLIC_CLIENT_ID as string
     const client_secret = process.env.NEXT_PUBLIC_CLIENT_SECRET as string
     const refresh_token = process.env.NEXT_PUBLIC_REFRESH_TOKEN as string
-    // const playlist_id = "6LXr2sAxWew8aRSLOcsLfK"
-    const { getCurrentlyPlayingSong } = useSpotify({client_id, client_secret, refresh_token});
-    const [currentSong, setCurrentSong] = useState<SpotifyTrack | null>(null);
+    const playlist_id = "6LXr2sAxWew8aRSLOcsLfK"
+    const { getPlaylistSongs } = useSpotify({client_id, client_secret, playlist_id, refresh_token});
+    const [playlists, setPlaylists] = useState<SpotifyPlaylistSong[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const handleFetchSong = async () => {
+    const handleFetchPlaylists = async () => {
         setLoading(true);
         setError(null);
         try {
-            const fetchedSong = await getCurrentlyPlayingSong();
-            setCurrentSong(fetchedSong)
+          const fetchedPlaylists = await getPlaylistSongs();
+          setPlaylists(fetchedPlaylists);
         } catch (err) {
           if (err instanceof Error) {
             setError(err.message);
@@ -33,13 +33,15 @@ export const Example = () => {
 
   return (
     <div>
-      <button onClick={handleFetchSong} disabled={loading}>
-        {loading ? 'Looking...' : 'See for currently playing'}
+      <button onClick={handleFetchPlaylists} disabled={loading}>
+        {loading ? 'Fetching...' : 'Fetch Playlists'}
       </button>
       {error && <div>Error: {error}</div>}
-      <div>
-        {currentSong === null ? <>No song playing</> : <>{currentSong!.name}</>}
-      </div>
+      <ul>
+        {playlists.map((playlist) => (
+          <li key={playlist.track.id}>{playlist.track.name}</li>
+        ))}
+      </ul>
     </div>
   )
 }
