@@ -83,7 +83,7 @@ export default function GenerateRefreshToken() {
                         https://www.base64encode.org
                     </a>.
                 </li>
-                <li>
+                <li className="mb-6">
                     Once the encoded string is generated, run the following cURL command:
                     <Curl />
                 </li>
