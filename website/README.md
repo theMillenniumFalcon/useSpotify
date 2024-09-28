@@ -1,0 +1,1 @@
+The useSpotify hook provides an easy way to interact with the Spotify API in your React applications. It allows you to search for tracks, manage playback, and access user's Spotify data.
