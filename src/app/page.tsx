@@ -4,7 +4,6 @@ import React from "react"
 import Link from "next/link"
 import { RiArrowRightUpLine } from "react-icons/ri"
 
-import { Example } from "@/components/example"
 import { GetAllPlaylists } from "@/components/examples/getAllPlaylists"
 import { GetCurrentlyPlayingSong } from "@/components/examples/getCurrentlyPlayingSong"
 import { GetPlaylistSongs } from "@/components/examples/getPlaylistSongs"
