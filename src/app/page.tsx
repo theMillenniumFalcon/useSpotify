@@ -22,13 +22,9 @@ export default function Home() {
             target="_blank"
             className="group flex items-center underline-offset-4 transition duration-150 ease-in-out underline">
             <span className="text-xs md:text-sm">See source</span>
-            <RiArrowRightUpLine
-              className="opacity-0 transition-opacity duration-150 group-hover:opacity-100"
-            />
+            <RiArrowRightUpLine className="opacity-0 transition-opacity duration-150 group-hover:opacity-100" />
           </a>
         </div>
-
-        {/* <FaSpotify className="text-2xl" /> */}
 
         <section className="mb-12">
           <h2 className="text-xl md:text-2xl font-semibold mb-4">Overview</h2>
