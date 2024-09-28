@@ -38,7 +38,7 @@ export const Example = () => {
       </button>
       {error && <div>Error: {error}</div>}
       <div>
-        {currentSong === null ? <>No song playing</> : <>{currentSong!.name}</>}
+        {currentSong === null ? <>No song is playing</> : <>{currentSong!.name}</>}
       </div>
     </div>
   )
