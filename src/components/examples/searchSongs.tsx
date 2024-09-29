@@ -30,9 +30,9 @@ export const SearchSongs = () => {
         try {
           const fetchedSongs = await searchSongs(search);
           setSongResults(fetchedSongs);
-        } catch (error) {
-          if (error instanceof Error) {
-            setError(error.message);
+        } catch (err) {
+          if (err instanceof Error) {
+            setError(err.message);
           } else {
             setError('An unknown error occurred');
           };
@@ -54,6 +54,7 @@ export const SearchSongs = () => {
           placeholder="Search songs..."
         />
       </div>
+      
       <div className="text-sm mt-4 text-muted-foreground">
         {query ? (
           <div className="w-80 overflow-hidden text-ellipsis whitespace-nowrap px-4 text-sm font-normal text-zinc-400">

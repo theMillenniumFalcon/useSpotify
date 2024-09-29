@@ -14,7 +14,7 @@ export const Signature = () => {
   const [copying, setCopying] = useState(0)
 
   const onCopy = useCallback(() => {
-    copy(`const { getAllPlaylists, getPlaylistSongs getCurrentlyPlayingSong } = useSpotify({ client_id, client_secret, refresh_token, user_id, playlist_id });`)
+    copy(`const { getAllPlaylists, getPlaylistSongs getCurrentlyPlayingSong, searchSongs } = useSpotify({ client_id, client_secret, refresh_token });`)
     toast.success('Text copied')
     setCopying((c) => c + 1)
     setTimeout(() => {
@@ -29,8 +29,9 @@ export const Signature = () => {
                 {`const {
   getAllPlaylists,
   getPlaylistSongs,
-  getCurrentlyPlayingSong
-} = useSpotify({ client_id, client_secret, refresh_token, user_id, playlist_id });`}
+  getCurrentlyPlayingSong,
+  searchSongs
+} = useSpotify({ client_id, client_secret, refresh_token });`}
             </div>
         <button aria-label="Copy code" className="absolute right-1.5 top-[17px] -translate-y-1/2 cursor-pointer rounded-md bg-white/[.1] text-white w-[26px] h-[26px] flex justify-center items-center">
           <MotionConfig transition={{ duration: 0.15 }}>

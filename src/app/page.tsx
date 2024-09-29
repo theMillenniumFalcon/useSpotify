@@ -53,17 +53,9 @@ export default function Home() {
               client_secret (required) <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">string</code>:
               The client secret of the application created from the spotify dashboard.
             </li>
-            <li className="mb-2">
+            <li>
               refresh_token (required) <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">string</code>:
               The refresh token that is created manually using client_id and client_secret.
-            </li>
-            <li className="mb-2">
-              user_id (optional) <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">string</code>:
-              The user ID of the user whose playlists are needed to be fetched.
-            </li>
-            <li>
-              playlist_id (optional) <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">string</code>:
-              The playlist ID of the playlist whose songs are needed to be fetched.
             </li>
           </ol>
           <h3 className="text-sm md:text-base">• Return Values:</h3>
@@ -79,6 +71,10 @@ export default function Home() {
             <li className="mb-2">
               getCurrentlyPlayingSong <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">{`() => Promise<SpotifyTrack | null>`}</code>:
               The function that returns the song playing currently by a given user.
+            </li>
+            <li className="mb-2">
+              searchSongs <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">{`() => Promise<SpotifySearchTrack[]>`}</code>:
+              The function that returns an array of song as per queried.
             </li>
           </ol>
           <p className="text-sm mt-4">
