@@ -17,24 +17,24 @@ export const Example = () => {
   const { searchSongs } = useSpotify({ client_id, client_secret, refresh_token });
 
   useEffect(() => {
-    const delayDebounceFn = setTimeout(async () => {
+    const fetchSongs = async () => {
       setQuery(search)
       if (search) {
         try {
-          const fetchedSongs = await searchSongs(search);
-        setSongResults(fetchedSongs);
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-            setError('An unknown error occurred');
+          const fetchedSongs = await searchSongs(search)
+          setSongResults(fetchedSongs)
+        } catch (err) {
+          if (err instanceof Error) {
+            setError(err.message)
+          } else {
+            setError('An unknown error occurred')
+          }
         }
       }
-      }
-    }, 600)
-
-    return () => clearTimeout(delayDebounceFn)
-  }, [search])
+    }
+  
+    fetchSongs();
+  }, [search, searchSongs]);
 
   return (
     <div>
@@ -88,9 +88,6 @@ export const Example = () => {
                   </div>
                 ) : null}
           </div>
-      {/* <div>
-        {currentSong === null ? <>No song is playing</> : <>{currentSong!.name}</>}
-      </div> */}
     </div>
   )
 }
