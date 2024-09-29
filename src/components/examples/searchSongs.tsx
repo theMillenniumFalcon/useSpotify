@@ -1,15 +1,21 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
-import { SpotifySearchTrack, useSpotify } from "@/hooks/use-spotify"
-import { BiSearch } from "react-icons/bi" 
+import React from "react"
 
-export const Example = () => {
-  // const user_id = process.env.NEXT_PUBLIC_USER_ID as string
-  const client_id = process.env.NEXT_PUBLIC_CLIENT_ID as string
-  const client_secret = process.env.NEXT_PUBLIC_CLIENT_SECRET as string
-  const refresh_token = process.env.NEXT_PUBLIC_REFRESH_TOKEN as string
-  // const playlist_id = "6LXr2sAxWew8aRSLOcsLfK"
+export const SearchSongs = () => {
+
+  return (
+    <div className="bg-white/[.1] px-1 rounded mt-1 mb-6">
+      <code className="block whitespace-pre-wrap break-all px-3 rounded text-xs md:text-sm relative h-auto items-center text-white">
+            <div className="py-2">
+{`import React, { useState, useEffect } from "react";
+import { SpotifySearchTrack, useSpotify } from "usespotify-react";
+import { BiSearch } from "react-icons/bi";
+
+export const SearchSongs = () => {
+  const client_id = process.env.CLIENT_ID as string;
+  const client_secret = process.env.CLIENT_SECRET as string;
+  const refresh_token = process.env.REFRESH_TOKEN as string;
   
   const { searchSongs } = useSpotify({ client_id, client_secret, refresh_token });
   const [songResults, setSongResults] = useState<SpotifySearchTrack[]>([]);
@@ -81,6 +87,12 @@ export const Example = () => {
           </div>
         ) : null}
       </div>
+    </div>
+  )
+}
+`}
+            </div>
+      </code>
     </div>
   )
 }

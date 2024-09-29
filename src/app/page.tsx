@@ -7,6 +7,7 @@ import { RiArrowRightUpLine } from "react-icons/ri"
 import { GetAllPlaylists } from "@/components/examples/getAllPlaylists"
 import { GetCurrentlyPlayingSong } from "@/components/examples/getCurrentlyPlayingSong"
 import { GetPlaylistSongs } from "@/components/examples/getPlaylistSongs"
+import { SearchSongs } from "@/components/examples/searchSongs"
 import { GenerateUserID } from "@/components/generateUserID"
 import { Installation } from "@/components/installation"
 import { Signature } from "@/components/signature"
@@ -105,6 +106,8 @@ export default function Home() {
           <GetPlaylistSongs />
           <h3 className="text-sm md:text-base">• To get the Currently Playing Song:</h3>
           <GetCurrentlyPlayingSong />
+          <h3 className="text-sm md:text-base">• Search for songs:</h3>
+          <SearchSongs />
         </section>
 
         <section className="mb-12">
