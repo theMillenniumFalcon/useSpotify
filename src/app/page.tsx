@@ -106,10 +106,10 @@ export default function Home() {
           <SearchSongs />
         </section>
 
-        <section className="mb-12">
+        {/* <section className="mb-12">
           <h2 className="text-2xl font-semibold mb-4">Example</h2>
           <Example />
-        </section>
+        </section> */}
       </main>
   );
 }

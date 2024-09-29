@@ -8,7 +8,7 @@ export const Example = () => {
   const client_id = process.env.NEXT_PUBLIC_CLIENT_ID as string
   const client_secret = process.env.NEXT_PUBLIC_CLIENT_SECRET as string
   const refresh_token = process.env.NEXT_PUBLIC_REFRESH_TOKEN as string
-  const playlist_id = "6LXr2sAxWew8aRSLOcsLfK"
+  // const playlist_id = "6LXr2sAxWew8aRSLOcsLfK"
   
   const { getAllPlaylists } = useSpotify({ client_id, client_secret, refresh_token });
   const [playlists, setPlaylists] = useState<SpotifyPlaylist[]>([]);
