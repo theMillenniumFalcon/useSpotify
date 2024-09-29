@@ -11,7 +11,7 @@ import { SearchSongs } from "@/components/examples/searchSongs"
 import { GenerateUserID } from "@/components/generateUserID"
 import { Installation } from "@/components/installation"
 import { Signature } from "@/components/signature"
-import { Example } from "@/components/example"
+// import { Example } from "@/components/example"
 
 export default function Home() {
   return (
