@@ -6,7 +6,10 @@ import {
     PlaylistSongsResponse,
     SpotifyPlaylistSong,
     CurrentlyPlayingResponse,
-    SpotifyTokenResponse 
+    SpotifyTokenResponse,
+    SpotifyTrack,
+    SpotifySearchTrack,
+    SearchSongsResponse
 } from "./types"
 
 const SPOTIFY_REST_URL: string = "https://api.spotify.com" as const
@@ -14,9 +17,7 @@ const SPOTIFY_REST_URL: string = "https://api.spotify.com" as const
 export const useSpotify = ({
     client_id,
     client_secret,
-    refresh_token,
-    user_id,
-    playlist_id,
+    refresh_token
 }: UseSpotifyHookProps) => {
     const authorization = Buffer.from(`${client_id ?? ''}:${client_secret ?? ''}`).toString('base64')
 
@@ -66,7 +67,7 @@ export const useSpotify = ({
         }
     }
 
-    const getAllPlaylists: () => Promise<SpotifyPlaylist[]> = useCallback(async () => {
+    const getAllPlaylists: (user_id: string) => Promise<SpotifyPlaylist[]> = useCallback(async (user_id) => {
         try {
             const access_token = await getAccessToken()
 
@@ -102,9 +103,9 @@ export const useSpotify = ({
             console.error(`Error fetching playlists for user ${user_id}:`, error)
             throw new Error(errorMessage)
         }
-    }, [user_id, authorization])
+    }, [authorization])
 
-    const getPlaylistSongs: () => Promise<SpotifyPlaylistSong[]> = useCallback(async () => {
+    const getPlaylistSongs: (playlist_id: string) => Promise<SpotifyPlaylistSong[]> = useCallback(async (playlist_id) => {
         try {
             const access_token = await getAccessToken()
 
@@ -144,7 +145,7 @@ export const useSpotify = ({
         }
     }, [authorization])
 
-    const getCurrentlyPlayingSong = useCallback(async () => {
+    const getCurrentlyPlayingSong: () => Promise<SpotifyTrack | null> = useCallback(async () => {
         try {
             const access_token = await getAccessToken()
 
@@ -165,7 +166,6 @@ export const useSpotify = ({
             }
         
             const data: CurrentlyPlayingResponse = await response.json()
-        
             return data.item
         } catch (error) {
             let errorMessage = "Failed to retrieve currently playing song"
@@ -181,7 +181,52 @@ export const useSpotify = ({
             console.error("Error fetching currently playing song:", error)
             throw new Error(errorMessage)
         }
-      }, [])
+    }, [authorization])
+
+    const searchSongs: (search_query: string) => Promise<SpotifySearchTrack[]> = useCallback(async (search_query) => {
+        try {
+            const access_token = await getAccessToken()
+
+            if (!access_token) {
+                throw new Error("Access token is missing or invalid")
+            }
+            
+            if (!search_query) {
+                throw new Error(`Invalid query string: Expected a empty or non-empty string, but received ${JSON.stringify(search_query)}`)
+            }
+            
+            const response = await fetch(`${SPOTIFY_REST_URL}/v1/search?q=${encodeURIComponent(search_query)}&type=track&limit=10`, {
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                },
+            })
     
-    return { getAllPlaylists, getPlaylistSongs, getCurrentlyPlayingSong }
+            if (!response.ok) {
+                throw new Error(`Failed to search songs: ${response.status} ${response.statusText}`)
+            }
+    
+            const data: SearchSongsResponse = await response.json()
+            return data.tracks.items
+        } catch (error) {
+            let errorMessage = "Failed to search songs"
+
+            if (error instanceof Error) {
+                errorMessage += `: ${error.message}`
+            } else if (typeof error === "string") {
+                errorMessage += `: ${error}`
+            } else {
+                errorMessage += ": An unknown error occurred"
+            }
+            
+            console.error("Error searching songs:", error)
+            throw new Error(errorMessage)
+        }
+    }, [authorization])
+    
+    return {
+        getAllPlaylists,
+        getPlaylistSongs,
+        getCurrentlyPlayingSong,
+        searchSongs
+    }
 }

@@ -2,8 +2,6 @@ export interface UseSpotifyHookProps {
     client_id: string;
     client_secret: string;
     refresh_token: string;
-    user_id?: string;
-    playlist_id?: string;
 }
 
 export interface PlaylistsResponse {
@@ -164,17 +162,17 @@ export interface Device {
 interface Context {
     type: string;
     href: string;
-    external_urls: ExternalUrls;
+    external_urls: SpotifyExternalUrls;
     uri: string;
 }
 
-export interface ExternalUrls {
+export interface SpotifyExternalUrls {
     spotify: string;
 }
 
 export interface SpotifyTrack {
-    album: Album;
-    artists: Artist[];
+    album: SpotifyAlbum;
+    artists: SpotifyArtist[];
     available_markets: string[];
     disc_number: number;
     duration_ms: number;
@@ -184,7 +182,7 @@ export interface SpotifyTrack {
       ean: string;
       upc: string;
     };
-    external_urls: ExternalUrls;
+    external_urls: SpotifyExternalUrls;
     href: string;
     id: string;
     is_playable: boolean;
@@ -201,11 +199,11 @@ export interface SpotifyTrack {
     is_local: boolean;
 }
 
-export interface Album {
+export interface SpotifyAlbum {
     album_type: string;
     total_tracks: number;
     available_markets: string[];
-    external_urls: ExternalUrls;
+    external_urls: SpotifyExternalUrls;
     href: string;
     id: string;
     images: Image[];
@@ -217,7 +215,7 @@ export interface Album {
     };
     type: string;
     uri: string;
-    artists: Artist[];
+    artists: SpotifyArtist[];
 }
 
 export interface Image {
@@ -226,8 +224,8 @@ export interface Image {
     width: number;
 }
 
-interface Artist {
-    external_urls: ExternalUrls;
+interface SpotifyArtist {
+    external_urls: SpotifyExternalUrls;
     href: string;
     id: string;
     name: string;
@@ -250,4 +248,35 @@ interface SpotifyTrackActions {
 
 export interface SpotifyTokenResponse {
 	access_token: string
+}
+
+export interface SpotifyExternalIds {
+  isrc: string;
+}
+
+export interface SpotifySearchTrack {
+  album: SpotifyAlbum;
+  artists: SpotifyArtist[];
+  available_markets: string[];
+  disc_number: number;
+  duration_ms: number;
+  explicit: boolean;
+  external_ids: SpotifyExternalIds;
+  external_urls: SpotifyExternalUrls;
+  href: string;
+  id: string;
+  is_local: boolean;
+  name: string;
+  popularity: number;
+  preview_url: string | null;
+  track_number: number;
+  type: string;
+  uri: string;
+}
+
+export interface SearchSongsResponse {
+  tracks: {
+    href: string;
+    items: SpotifySearchTrack[]
+  }
 }

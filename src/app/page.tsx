@@ -10,6 +10,7 @@ import { GetPlaylistSongs } from "@/components/examples/getPlaylistSongs"
 import { GenerateUserID } from "@/components/generateUserID"
 import { Installation } from "@/components/installation"
 import { Signature } from "@/components/signature"
+import { Example } from "@/components/example"
 
 export default function Home() {
   return (
@@ -106,10 +107,10 @@ export default function Home() {
           <GetCurrentlyPlayingSong />
         </section>
 
-        {/* <section className="mb-12">
+        <section className="mb-12">
           <h2 className="text-2xl font-semibold mb-4">Example</h2>
           <Example />
-        </section> */}
+        </section>
       </main>
   );
 }
