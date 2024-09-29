@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
-import { SpotifySearchTrack, useSpotify } from "@/hooks/use-spotify"
+import { useSpotify, SpotifySearchTrack } from "@/hooks/use-spotify"
 import { BiSearch } from "react-icons/bi" 
 
 export const Example = () => {
@@ -64,15 +64,15 @@ export const Example = () => {
       <div className="w-full">
         {query ? (
           <div className="p-4 space-y-2">
-            {songResults && songResults.map((song: any, i: number) => (
-              <div key={i}>
+            {songResults && songResults.map((song) => (
+              <div key={song.id}>
                 <div className="-mb-0.5 w-72 overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm">
                   {song?.name ?? "No Song Name"}
                 </div>
                 <div className="flex w-72 items-center space-x-1 overflow-hidden text-ellipsis whitespace-nowrap text-xs font-normal text-zinc-500">
-                  {song?.artists?.map((artist: any, i: number) => (
+                  {song?.artists?.map((artist, i: number) => (
                     <div key={artist.name + song?.name}>
-                      {artist.name + (i < song?.track?.artists?.length - 1 ? "," : "")}
+                      {artist.name + (i < song?.artists?.length - 1 ? "," : "")}
                     </div>
                   ))}
                 </div>
