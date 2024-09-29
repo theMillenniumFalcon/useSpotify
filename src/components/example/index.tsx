@@ -48,19 +48,16 @@ export const Example = () => {
         />
       </div>
       <div className="text-sm text-muted-foreground">
-            {query ? (
-                <div className="w-80 overflow-hidden text-ellipsis whitespace-nowrap px-4 text-sm font-normal text-zinc-400">
-                  Searching for:{" "}
-                  <span className="font-bold underline underline-offset-2">
-                    {query}
-                  </span>
-                </div>
-            ) : (
-              <div className="w-80 overflow-hidden text-ellipsis whitespace-nowrap px-4 text-sm font-normal text-zinc-400">
-                -
-              </div>
-            )}
+        {query ? (
+          <div className="w-80 overflow-hidden text-ellipsis whitespace-nowrap px-4 text-sm font-normal text-zinc-400">
+            Searching for:{" "}
+            <span className="font-bold underline underline-offset-2">
+              {query}
+            </span>
           </div>
+        ) : null}
+      </div>
+      
       {error && <div>Error: {error}</div>}
 
       <div className="w-full">

@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react"
+import { useCallback, useRef, useMemo } from "react"
 import {
     UseSpotifyHookProps,
     PlaylistsResponse,
@@ -20,19 +20,26 @@ export const useSpotify = ({
     client_secret,
     refresh_token
 }: UseSpotifyHookProps) => {
-    const authorization = Buffer.from(`${client_id ?? ''}:${client_secret ?? ''}`).toString('base64')
+    const accessTokenRef = useRef<string | null>(null)
+    const authorization = useMemo(() => {
+        return Buffer.from(`${client_id}:${client_secret}`).toString('base64')
+    }, [client_id, client_secret])
     const debounceTimerRef = useRef<NodeJS.Timeout | null>(null)
 
-    const getAccessToken = async (): Promise<string> => {
-        if (!refresh_token || refresh_token.trim() === "") {
-          throw new Error(`Invalid refresh_token: Expected a non-empty string, but received ${JSON.stringify(refresh_token)}`)
+    const getAccessToken = useCallback(async (): Promise<string> => {
+        if (accessTokenRef.current) {
+            return accessTokenRef.current
         }
-      
+
+        if (!refresh_token || refresh_token.trim() === "") {
+            throw new Error(`Invalid refresh_token: Expected a non-empty string, but received ${JSON.stringify(refresh_token)}`)
+        }
+
         const params = new URLSearchParams({
             grant_type: "refresh_token",
             refresh_token: refresh_token
         })
-      
+
         try {
             const response = await fetch("https://accounts.spotify.com/api/token", {
                 method: 'POST',
@@ -42,21 +49,23 @@ export const useSpotify = ({
                 },
                 body: params,
             })
-        
+
             if (!response.ok) {
                 const errorText = await response.text()
                 throw new Error(`Failed to fetch access token: ${response.status} ${response.statusText}. ${errorText}`)
             }
-            
+
             const data: SpotifyTokenResponse = await response.json()
-            
+
             if (!data.access_token) {
                 throw new Error("Access token not found in the response")
             }
-        
+
+            accessTokenRef.current = data.access_token
             return data.access_token
         } catch (error) {
             let errorMessage = "Failed to fetch access token"
+
             if (error instanceof Error) {
                 errorMessage += `: ${error.message}`
             } else if (typeof error === "string") {
@@ -64,10 +73,11 @@ export const useSpotify = ({
             } else {
                 errorMessage += ": An unknown error occurred"
             }
+
             console.error(errorMessage, error)
             throw new Error(errorMessage)
         }
-    }
+    }, [refresh_token, authorization])
 
     const getAllPlaylists: (user_id: string) => Promise<SpotifyPlaylist[]> = useCallback(async (user_id) => {
         try {
