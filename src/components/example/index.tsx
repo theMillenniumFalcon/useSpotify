@@ -4,7 +4,7 @@ import React, { useState } from "react"
 import { useSpotify, SpotifyUserProfile } from "@/hooks/use-spotify"
 
 export const Example = () => {
-  const user_id = process.env.NEXT_PUBLIC_USER_ID as string
+  // const user_id = process.env.NEXT_PUBLIC_USER_ID as string
   const client_id = process.env.NEXT_PUBLIC_CLIENT_ID as string
   const client_secret = process.env.NEXT_PUBLIC_CLIENT_SECRET as string
   const refresh_token = process.env.NEXT_PUBLIC_REFRESH_TOKEN as string
