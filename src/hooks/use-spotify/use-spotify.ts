@@ -116,7 +116,7 @@ export const useSpotify = ({
         }
     }, [getAccessToken])
 
-    const getAllPlaylists = useCallback(async (user_id: string, limit?: number, offset?: number): Promise<SpotifyPlaylist[]> => {
+    const getPlaylists = useCallback(async (user_id: string, limit?: number, offset?: number): Promise<SpotifyPlaylist[]> => {
         try {
             const access_token = await getAccessToken()
 
@@ -294,7 +294,7 @@ export const useSpotify = ({
     
     return {
         getUserInfo,
-        getAllPlaylists,
+        getPlaylists,
         getPlaylistSongs,
         getCurrentlyPlayingSong,
         searchSongs

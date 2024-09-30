@@ -14,7 +14,7 @@ export const Signature = () => {
   const [copying, setCopying] = useState(0)
 
   const onCopy = useCallback(() => {
-    copy(`const { getUserInfo, getAllPlaylists, getPlaylistSongs getCurrentlyPlayingSong, searchSongs } = useSpotify({ client_id, client_secret, refresh_token });`)
+    copy(`const { getUserInfo, getPlaylists, getPlaylistSongs, getCurrentlyPlayingSong, searchSongs } = useSpotify({ client_id, client_secret, refresh_token });`)
     toast.success('Text copied')
     setCopying((c) => c + 1)
     setTimeout(() => {
@@ -28,7 +28,7 @@ export const Signature = () => {
             <div className="my-2">
                 {`const {
   getUserInfo,
-  getAllPlaylists,
+  getPlaylists,
   getPlaylistSongs,
   getCurrentlyPlayingSong,
   searchSongs

@@ -4,7 +4,7 @@ import React from "react"
 import Link from "next/link"
 import { RiArrowRightUpLine } from "react-icons/ri"
 
-import { GetAllPlaylists } from "@/components/examples/getAllPlaylists"
+import { GetPlaylists } from "@/components/examples/getPlaylists"
 import { GetCurrentlyPlayingSong } from "@/components/examples/getCurrentlyPlayingSong"
 import { GetPlaylistSongs } from "@/components/examples/getPlaylistSongs"
 import { SearchSongs } from "@/components/examples/searchSongs"
@@ -102,23 +102,23 @@ export default function Home() {
           <h3 className="text-sm md:text-base">• Return Values:</h3>
           <ol className="list-inside list-decimal my-2 mx-3 text-xs md:text-sm text-left font-[family-name:var(--font-geist-mono)]">
             <li className="mb-4">
-              getUserInfo <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">{`() => Promise<SpotifyUserProfile>`}</code>:
+              <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">{`getUserInfo(): Promise<SpotifyUserProfile>`}</code>:
               Returns the User Info.
             </li>
             <li className="mb-4">
-              getAllPlaylists <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">{`(user_id: string, limit?: number, offset?: number) => Promise<SpotifyPlaylist[]>`}</code>:
+              <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">{`getPlaylists(user_id: string, limit?: number, offset?: number): Promise<SpotifyPlaylist[]>`}</code>:
               Returns all playlists of a given user.
             </li>
             <li className="mb-4">
-              getPlaylistSongs <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">{`(playlist_id: string) => Promise<SpotifyPlaylistSong[]>`}</code>:
+              <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">{`getPlaylistSongs(playlist_id: string): Promise<SpotifyPlaylistSong[]>`}</code>:
               Returns all songs of a given playlist.
             </li>
             <li className="mb-4">
-              getCurrentlyPlayingSong <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">{`() => Promise<SpotifyTrack | null>`}</code>:
+              <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">{`getCurrentlyPlayingSong(): Promise<SpotifyTrack | null>`}</code>:
               Returns the song currently playing for the user.
             </li>
             <li className="mb-4">
-              searchSongs <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">{`(search_query: string, debounce_timer?: number) => Promise<SpotifySearchTrack[]>`}</code>:
+              <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">{`searchSongs(search_query: string, debounce_timer?: number): Promise<SpotifySearchTrack[]>`}</code>:
               Returns an array of songs as per user query.
             </li>
           </ol>
@@ -141,7 +141,7 @@ export default function Home() {
           <h3 id="user-info" className="text-sm md:text-base">• To get user info:</h3>
           <GetUserInfo />
           <h3 id="all-playlists" className="text-sm md:text-base">• To get all Playlists of a User:</h3>
-          <GetAllPlaylists />
+          <GetPlaylists />
           <h3 id="all-playlist-songs" className="text-sm md:text-base mt-10">• To get all Songs of a Playlist:</h3>
           <GetPlaylistSongs />
           <h3 id="currently-playing-song" className="text-sm md:text-base mt-10">• To get the Currently Playing Song:</h3>

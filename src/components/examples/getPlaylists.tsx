@@ -7,8 +7,8 @@ import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism"
 const codeString = `import React, { useState } from "react";
 import { useSpotify, SpotifyPlaylist } from "usespotify-react";
 
-export const GetAllPlaylists = () => {
-    const { getAllPlaylists } = useSpotify({ client_id, client_secret, refresh_token });
+export const GetPlaylists = () => {
+    const { getPlaylists } = useSpotify({ client_id, client_secret, refresh_token });
     const [playlists, setPlaylists] = useState<SpotifyPlaylist[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -17,7 +17,7 @@ export const GetAllPlaylists = () => {
         setLoading(true);
         setError(null);
         try {
-          const fetchedPlaylists = await getAllPlaylists(user_id);
+          const fetchedPlaylists = await getPlaylists(user_id);
           setPlaylists(fetchedPlaylists);
         } catch (err) {
           if (err instanceof Error) {
@@ -49,7 +49,7 @@ export const GetAllPlaylists = () => {
   )
 }`
 
-export const GetAllPlaylists = () => {
+export const GetPlaylists = () => {
   return (
     <div className="bg-white/[.1] px-1 rounded mt-1 mb-6">
       <SyntaxHighlighter
