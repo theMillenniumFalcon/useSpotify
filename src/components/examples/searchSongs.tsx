@@ -1,14 +1,10 @@
 "use client"
 
 import React from "react"
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism"
 
-export const SearchSongs = () => {
-
-  return (
-    <div className="bg-white/[.1] px-1 rounded mt-1 mb-6">
-      <code className="block whitespace-pre-wrap break-all px-3 rounded text-xs md:text-sm relative h-auto items-center text-white">
-            <div className="py-2">
-{`import React, { useState, useEffect } from "react";
+const codeString = `import React, { useState, useEffect } from "react";
 import { useSpotify, SpotifySearchTrack } from "usespotify-react";
 import { BiSearch } from "react-icons/bi";
 
@@ -86,9 +82,26 @@ export const SearchSongs = () => {
       </div>
     </div>
   )
-}`}
-        </div>
-      </code>
+}`
+
+export const SearchSongs = () => {
+  return (
+    <div className="bg-white/[.1] px-1 rounded mt-1 mb-6">
+      <SyntaxHighlighter
+        language="typescript"
+        style={atomDark}
+        customStyle={{
+          margin: 0,
+          padding: '8px 12px',
+          fontSize: '0.875rem',
+          lineHeight: '1.25rem',
+          backgroundColor: 'transparent',
+        }}
+        wrapLines={true}
+        wrapLongLines={true}
+      >
+        {codeString}
+      </SyntaxHighlighter>
     </div>
   )
 }

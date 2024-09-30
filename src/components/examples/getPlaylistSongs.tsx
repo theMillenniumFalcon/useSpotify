@@ -1,14 +1,10 @@
 "use client"
 
 import React from "react"
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism"
 
-export const GetPlaylistSongs = () => {
-
-  return (
-    <div className="bg-white/[.1] px-1 rounded mt-1 mb-6">
-      <code className="block whitespace-pre-wrap break-all px-3 rounded text-xs md:text-sm relative h-auto items-center text-white">
-            <div className="py-2">
-{`import React, { useState } from "react";
+const codeString = `import React, { useState } from "react";
 import { useSpotify, SpotifyPlaylistSong } from "usespotify-react";
 
 export const GetPlaylistSongs = () => {
@@ -36,21 +32,47 @@ export const GetPlaylistSongs = () => {
 
     return (
       <div>
-        <button className="text-zinc-100 font-bold py-2 px-4 rounded border border-zinc-500" onClick={handleFetchSongs} disabled={loading}>
+        <button
+          className="text-zinc-100 font-bold py-2 px-4 rounded border border-zinc-500"
+          onClick={handleFetchSongs}
+          disabled={loading}
+        >
             {loading ? 'Fetching...' : 'Fetch Songs'}
         </button>
         
         <ul className="mt-4">
           {error && <div>Error: {error}</div>}
           {songs.map((song) => (
-            <li className="text-sm font-normal text-zinc-300" key={song.track.id}>{song.track.name}</li>
+            <li
+              className="text-sm font-normal text-zinc-300"
+              key={song.track.id}
+            >
+              {song.track.name}
+            </li>
           ))}
         </ul>
       </div>
     )
-}`}
-            </div>
-      </code>
+}`
+
+export const GetPlaylistSongs = () => {
+  return (
+    <div className="bg-white/[.1] px-1 rounded mt-1 mb-6">
+      <SyntaxHighlighter
+        language="typescript"
+        style={atomDark}
+        customStyle={{
+          margin: 0,
+          padding: '8px 12px',
+          fontSize: '0.875rem',
+          lineHeight: '1.25rem',
+          backgroundColor: 'transparent',
+        }}
+        wrapLines={true}
+        wrapLongLines={true}
+      >
+        {codeString}
+      </SyntaxHighlighter>
     </div>
   )
 }
