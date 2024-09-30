@@ -31,8 +31,8 @@ export const GetUserInfo = () => {
       }
     } finally {
         setLoading(false);
-    }
-};
+    };
+  };
 
   return (
     <div>

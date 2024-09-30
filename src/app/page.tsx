@@ -22,7 +22,7 @@ export default function Home() {
             href="https://github.com/theMillenniumFalcon/useSpotify"
             rel="noopenner noreferrer"
             target="_blank"
-            className="group flex items-center underline-offset-4 transition duration-150 ease-in-out underline">
+            className="group flex items-center underline underline-offset-4 transition duration-150 ease-in-out">
             <span className="text-xs md:text-sm">See source</span>
             <RiArrowRightUpLine className="opacity-0 transition-opacity duration-150 group-hover:opacity-100" />
           </a>
@@ -36,11 +36,52 @@ export default function Home() {
         </section>
 
         <section className="mb-16">
+          <h2 className="text-xl md:text-2xl font-semibold mb-4">Contents</h2>
+          <p className="text-xs md:text-sm mb-2">
+            <Link href="#installation" className="underline underline-offset-4">
+              Installation
+            </Link>  
+          </p>
+          <p className="text-xs md:text-sm mb-2">
+            <Link href="#signature" className="underline underline-offset-4">
+              Signature
+            </Link>  
+          </p>
+          <p className="text-xs md:text-sm mb-2">
+            <Link href="#user-info" className="underline underline-offset-4">
+              Get User Info
+            </Link>
+          </p>
+          <p className="text-xs md:text-sm mb-2">
+            <Link href="#all-playlists" className="underline underline-offset-4">
+              Get All Playlists of a User
+            </Link>
+          </p>
+          <p className="text-xs md:text-sm mb-2">
+            <Link href="#all-playlist-songs" className="underline underline-offset-4">
+              Get All Songs of a Playlist
+            </Link>
+          </p>
+          <p className="text-xs md:text-sm mb-2">
+            <Link href="#currently-playing-song" className="underline underline-offset-4">
+              Get the Currently Playing Song
+            </Link>
+          </p>
+          <p className="text-xs md:text-sm">
+            <Link href="#search-songs" className="underline underline-offset-4">
+              Search for Songs
+            </Link>
+            {" "}
+            <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">new</code>
+          </p>
+        </section>
+
+        <section id="installation" className="mb-16">
           <h2 className="text-xl md:text-2xl font-semibold mb-4">Installation</h2>
           <Installation />
         </section>
 
-        <section className="mb-16">
+        <section id="signature" className="mb-16">
           <h2 className="text-xl md:text-2xl font-semibold mb-4">Signature</h2>
           <Signature />
           <h3 className="text-sm md:text-base">• Parameters:</h3>
@@ -97,15 +138,15 @@ export default function Home() {
 
         <section className="mb-12">
           <h2 className="text-xl md:text-2xl font-semibold mb-4">Examples to demonstrate useSpotify() hook</h2>
-          <h3 className="text-sm md:text-base">• To get user info:</h3>
+          <h3 id="user-info" className="text-sm md:text-base">• To get user info:</h3>
           <GetUserInfo />
-          <h3 className="text-sm md:text-base">• To get all Playlists of a User:</h3>
+          <h3 id="all-playlists" className="text-sm md:text-base">• To get all Playlists of a User:</h3>
           <GetAllPlaylists />
-          <h3 className="text-sm md:text-base mt-10">• To get all Songs of a Playlist:</h3>
+          <h3 id="all-playlist-songs" className="text-sm md:text-base mt-10">• To get all Songs of a Playlist:</h3>
           <GetPlaylistSongs />
-          <h3 className="text-sm md:text-base mt-10">• To get the Currently Playing Song:</h3>
+          <h3 id="currently-playing-song" className="text-sm md:text-base mt-10">• To get the Currently Playing Song:</h3>
           <GetCurrentlyPlayingSong />
-          <h3 className="text-sm md:text-base mt-10">• Search for songs:</h3>
+          <h3 id="search-songs" className="text-sm md:text-base mt-10">• Search for songs:</h3>
           <SearchSongs />
         </section>
 
