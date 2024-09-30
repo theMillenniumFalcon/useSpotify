@@ -7,7 +7,7 @@ const Footer = () => {
         <footer className="pt-8">
             <hr className="h-px border-0 bg-neutral-300" />
             <div className="mx-1 flex justify-end pt-4">
-                <p className="text-xs">
+                <p className="text-xs md:text-sm">
                     Built with ❤️ by{" "}
                     <a
                         href="https://nishank.vercel.app"
