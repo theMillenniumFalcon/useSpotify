@@ -2,8 +2,20 @@ interface UseSpotifyHookProps {
     client_id: string;
     client_secret: string;
     refresh_token: string;
-    user_id?: string;
-    playlist_id?: string;
+}
+interface SpotifyUserProfile {
+    display_name: string;
+    external_urls: SpotifyExternalUrls;
+    href: string;
+    id: string;
+    images: SpotifyImage[];
+    type: 'user';
+    uri: string;
+    followers: SpotifyFollowers;
+}
+interface SpotifyFollowers {
+    href: string | null;
+    total: number;
 }
 interface PlaylistsResponse {
     href: string;
@@ -157,15 +169,15 @@ interface Device {
 interface Context {
     type: string;
     href: string;
-    external_urls: ExternalUrls;
+    external_urls: SpotifyExternalUrls;
     uri: string;
 }
-interface ExternalUrls {
+interface SpotifyExternalUrls {
     spotify: string;
 }
 interface SpotifyTrack {
-    album: Album;
-    artists: Artist[];
+    album: SpotifyAlbum;
+    artists: SpotifyArtist[];
     available_markets: string[];
     disc_number: number;
     duration_ms: number;
@@ -175,7 +187,7 @@ interface SpotifyTrack {
         ean: string;
         upc: string;
     };
-    external_urls: ExternalUrls;
+    external_urls: SpotifyExternalUrls;
     href: string;
     id: string;
     is_playable: boolean;
@@ -191,14 +203,14 @@ interface SpotifyTrack {
     uri: string;
     is_local: boolean;
 }
-interface Album {
+interface SpotifyAlbum {
     album_type: string;
     total_tracks: number;
     available_markets: string[];
-    external_urls: ExternalUrls;
+    external_urls: SpotifyExternalUrls;
     href: string;
     id: string;
-    images: Image[];
+    images: SpotifyImage[];
     name: string;
     release_date: string;
     release_date_precision: string;
@@ -207,15 +219,15 @@ interface Album {
     };
     type: string;
     uri: string;
-    artists: Artist[];
+    artists: SpotifyArtist[];
 }
-interface Image {
+interface SpotifyImage {
     url: string;
     height: number;
     width: number;
 }
-interface Artist {
-    external_urls: ExternalUrls;
+interface SpotifyArtist {
+    external_urls: SpotifyExternalUrls;
     href: string;
     id: string;
     name: string;
@@ -237,11 +249,41 @@ interface SpotifyTrackActions {
 interface SpotifyTokenResponse {
     access_token: string;
 }
+interface SpotifyExternalIds {
+    isrc: string;
+}
+interface SpotifySearchTrack {
+    album: SpotifyAlbum;
+    artists: SpotifyArtist[];
+    available_markets: string[];
+    disc_number: number;
+    duration_ms: number;
+    explicit: boolean;
+    external_ids: SpotifyExternalIds;
+    external_urls: SpotifyExternalUrls;
+    href: string;
+    id: string;
+    is_local: boolean;
+    name: string;
+    popularity: number;
+    preview_url: string | null;
+    track_number: number;
+    type: string;
+    uri: string;
+}
+interface SearchSongsResponse {
+    tracks: {
+        href: string;
+        items: SpotifySearchTrack[];
+    };
+}
 
-declare const useSpotify: ({ client_id, client_secret, refresh_token, user_id, playlist_id, }: UseSpotifyHookProps) => {
-    getAllPlaylists: () => Promise<SpotifyPlaylist[]>;
-    getPlaylistSongs: () => Promise<SpotifyPlaylistSong[]>;
+declare const useSpotify: ({ client_id, client_secret, refresh_token }: UseSpotifyHookProps) => {
+    getUserInfo: () => Promise<SpotifyUserProfile>;
+    getPlaylists: (user_id: string, limit?: number, offset?: number) => Promise<SpotifyPlaylist[]>;
+    getPlaylistSongs: (playlist_id: string) => Promise<SpotifyPlaylistSong[]>;
     getCurrentlyPlayingSong: () => Promise<SpotifyTrack | null>;
+    searchSongs: (search_query: string, debounce_timer?: number) => Promise<SpotifySearchTrack[]>;
 };
 
-export { type Album, type CurrentlyPlayingResponse, type Device, type ExternalUrls, type Image, type PlaylistSongsResponse, type PlaylistsResponse, type SpotifyPlaylist, type SpotifyPlaylistSong, type SpotifyTokenResponse, type SpotifyTrack, type UseSpotifyHookProps, useSpotify };
+export { type CurrentlyPlayingResponse, type Device, type PlaylistSongsResponse, type PlaylistsResponse, type SearchSongsResponse, type SpotifyAlbum, type SpotifyExternalIds, type SpotifyExternalUrls, type SpotifyImage, type SpotifyPlaylist, type SpotifyPlaylistSong, type SpotifySearchTrack, type SpotifyTokenResponse, type SpotifyTrack, type SpotifyUserProfile, type UseSpotifyHookProps, useSpotify };
