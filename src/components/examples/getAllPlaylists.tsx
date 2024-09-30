@@ -12,11 +12,6 @@ export const GetAllPlaylists = () => {
 import { useSpotify, SpotifyPlaylist } from "usespotify-react";
 
 export const GetAllPlaylists = () => {
-    const client_id = process.env.CLIENT_ID as string;
-    const client_secret = process.env.CLIENT_SECRET as string;
-    const refresh_token = process.env.REFRESH_TOKEN as string;
-    const user_id = process.env.USER_ID as string;
-
     const { getAllPlaylists } = useSpotify({ client_id, client_secret, refresh_token });
     const [playlists, setPlaylists] = useState<SpotifyPlaylist[]>([]);
     const [loading, setLoading] = useState(false);
@@ -44,10 +39,10 @@ export const GetAllPlaylists = () => {
       <button className="text-zinc-100 font-bold py-2 px-4 rounded border border-zinc-500" onClick={handleFetchPlaylists} disabled={loading}>
         {loading ? 'Fetching...' : 'Fetch Playlists'}
       </button>
-      <ul className="mt-4">
-        {error && <div>Error: {error}</div>}
+      <ul className="mt-4 text-sm font-normal text-zinc-300">
+        {error && <div >Error: {error}</div>}
         {playlists.map((playlist) => (
-          <li className="text-sm font-normal text-zinc-300" key={playlist.id}>{playlist.name}</li>
+          <li key={playlist.id}>{playlist.name}</li>
         ))}
       </ul>
     </div>

@@ -12,11 +12,6 @@ export const GetPlaylistSongs = () => {
 import { useSpotify, SpotifyPlaylistSong } from "usespotify-react";
 
 export const GetPlaylistSongs = () => {
-    const client_id = process.env.CLIENT_ID as string;
-    const client_secret = process.env.CLIENT_SECRET as string;
-    const refresh_token = process.env.REFRESH_TOKEN as string;
-    const playlist_id = process.env.PLAYLIST_ID as string;
-
     const { getPlaylistSongs } = useSpotify({ client_id, client_secret, refresh_token });
     const [songs, setSongs] = useState<SpotifyPlaylistSong[]>([]);
     const [loading, setLoading] = useState(false);

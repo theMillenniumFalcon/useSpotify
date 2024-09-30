@@ -4,6 +4,22 @@ export interface UseSpotifyHookProps {
     refresh_token: string;
 }
 
+export interface SpotifyUserProfile {
+  display_name: string;
+  external_urls: SpotifyExternalUrls;
+  href: string;
+  id: string;
+  images: SpotifyImage[];
+  type: 'user';
+  uri: string;
+  followers: SpotifyFollowers;
+}
+
+interface SpotifyFollowers {
+  href: string | null;
+  total: number;
+}
+
 export interface PlaylistsResponse {
     href: string;
     limit: number;
@@ -206,7 +222,7 @@ export interface SpotifyAlbum {
     external_urls: SpotifyExternalUrls;
     href: string;
     id: string;
-    images: Image[];
+    images: SpotifyImage[];
     name: string;
     release_date: string;
     release_date_precision: string;
@@ -218,7 +234,7 @@ export interface SpotifyAlbum {
     artists: SpotifyArtist[];
 }
 
-export interface Image {
+export interface SpotifyImage {
     url: string;
     height: number;
     width: number;

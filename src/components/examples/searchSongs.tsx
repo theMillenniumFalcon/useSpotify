@@ -13,10 +13,6 @@ import { useSpotify, SpotifySearchTrack } from "usespotify-react";
 import { BiSearch } from "react-icons/bi";
 
 export const SearchSongs = () => {
-  const client_id = process.env.CLIENT_ID as string;
-  const client_secret = process.env.CLIENT_SECRET as string;
-  const refresh_token = process.env.REFRESH_TOKEN as string;
-  
   const { searchSongs } = useSpotify({ client_id, client_secret, refresh_token });
   const [songResults, setSongResults] = useState<SpotifySearchTrack[]>([]);
   const [query, setQuery] = useState<string>("");

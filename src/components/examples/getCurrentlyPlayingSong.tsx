@@ -12,10 +12,6 @@ export const GetCurrentlyPlayingSong = () => {
 import { useSpotify, SpotifyTrack } from "usespotify-react";
 
 export const GetCurrentlyPlayingSong = () => {
-  const client_id = process.env.CLIENT_ID as string;
-  const client_secret = process.env.CLIENT_SECRET as string;
-  const refresh_token = process.env.REFRESH_TOKEN as string;
-
   const { getCurrentlyPlayingSong } = useSpotify({ client_id, client_secret, refresh_token });
   const [currentSong, setCurrentSong] = useState<SpotifyTrack | null>(null);
   const [loading, setLoading] = useState(false);

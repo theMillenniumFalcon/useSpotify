@@ -9,7 +9,8 @@ import {
     SpotifyTokenResponse,
     SpotifyTrack,
     SpotifySearchTrack,
-    SearchSongsResponse
+    SearchSongsResponse,
+    SpotifyUserProfile
 } from "./types"
 
 const SPOTIFY_REST_URL: string = "https://api.spotify.com" as const
@@ -79,7 +80,43 @@ export const useSpotify = ({
         }
     }, [refresh_token, authorization])
 
-    const getAllPlaylists: (user_id: string) => Promise<SpotifyPlaylist[]> = useCallback(async (user_id) => {
+    const getUserInfo = useCallback(async (): Promise<SpotifyUserProfile> => {
+        try {
+            const access_token = await getAccessToken()
+
+            if (!access_token) {
+                throw new Error("Access token is missing or invalid")
+            }
+            
+            const response = await fetch(`${SPOTIFY_REST_URL}/v1/me`, {
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                },
+            })
+    
+            if (!response.ok) {
+                throw new Error(`Failed to fetch user info: ${response.status} ${response.statusText}`)
+            }
+    
+            const data: SpotifyUserProfile = await response.json()
+            return data
+        } catch (error) {
+            let errorMessage = "Failed to retrieve user info"
+
+            if (error instanceof Error) {
+                errorMessage += `: ${error.message}`;
+            } else if (typeof error === "string") {
+                errorMessage += `: ${error}`
+            } else {
+                errorMessage += ": An unknown error occurred"
+            }
+
+            console.error("Error fetching user info:", error)
+            throw new Error(errorMessage)
+        }
+    }, [getAccessToken])
+
+    const getAllPlaylists = useCallback(async (user_id: string, limit?: number, offset?: number): Promise<SpotifyPlaylist[]> => {
         try {
             const access_token = await getAccessToken()
 
@@ -90,8 +127,18 @@ export const useSpotify = ({
             if (!user_id || user_id.trim() === "") {
                 throw new Error(`Invalid user ID: Expected a non-empty string, but received ${JSON.stringify(user_id)}`)
             }
+
+            if (limit && ((limit < 0 || limit > 50))) {
+                throw new Error(`Invalid limit value: Expected to be between 0 and 50, but recieved ${limit}`)
+            }
+
+            if (offset && ((offset < 0 || offset > 100))) {
+                throw new Error(`Invalid offset value: Expected to be between 0 and 100, but recieved ${offset}`)
+            }
     
-            const response = await fetch(`${SPOTIFY_REST_URL}/v1/users/${user_id}/playlists`, {
+            const response = await fetch(`
+                ${SPOTIFY_REST_URL}/v1/users/${user_id}/playlists?limit=${limit ? limit : 20}&offset=${offset ? offset : 5}
+            `, {
                 headers: {
                     "Authorization": `Bearer ${access_token}`,
                 },
@@ -105,6 +152,7 @@ export const useSpotify = ({
             return data.items
         } catch (error) {
             let errorMessage = `Failed to retrieve playlists for user ${user_id || "${userId}"}`
+
             if (error instanceof Error) {
                 errorMessage += `: ${error.message}`
             } else if (typeof error === "string") {
@@ -112,6 +160,7 @@ export const useSpotify = ({
             } else {
                 errorMessage += ": An unknown error occurred"
             }
+            
             console.error(`Error fetching playlists for user ${user_id}:`, error)
             throw new Error(errorMessage)
         }
@@ -244,6 +293,7 @@ export const useSpotify = ({
     }, [getAccessToken])
     
     return {
+        getUserInfo,
         getAllPlaylists,
         getPlaylistSongs,
         getCurrentlyPlayingSong,
