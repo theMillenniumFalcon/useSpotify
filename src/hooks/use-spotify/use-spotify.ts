@@ -1,16 +1,20 @@
 import { useCallback, useRef, useMemo } from "react"
 import {
     UseSpotifyHookProps,
-    PlaylistsResponse,
+    SpotifyPlaylistsResponse,
     SpotifyPlaylist,
-    PlaylistSongsResponse,
+    SpotifyPlaylistSongsResponse,
     SpotifyPlaylistSong,
-    CurrentlyPlayingResponse,
+    SpotifyCurrentlyPlayingResponse,
     SpotifyTokenResponse,
     SpotifyTrack,
     SpotifySearchTrack,
-    SearchSongsResponse,
-    SpotifyUserProfile
+    SpotifySearchSongsResponse,
+    SpotifyUserProfile,
+    SpotifyTopArtist,
+    SpotifyTopTrack,
+    SpotifyTopArtistsResponse,
+    SpotifyTopTracksResponse
 } from "./types"
 
 const SPOTIFY_REST_URL: string = "https://api.spotify.com" as const
@@ -21,11 +25,19 @@ export const useSpotify = ({
     client_secret,
     refresh_token
 }: UseSpotifyHookProps) => {
-    const accessTokenRef = useRef<string | null>(null)
     const authorization = useMemo(() => {
         return Buffer.from(`${client_id}:${client_secret}`).toString('base64')
     }, [client_id, client_secret])
+
+    const accessTokenRef = useRef<string | null>(null)
     const debounceTimerRef = useRef<NodeJS.Timeout | null>(null)
+
+    type TopItemType = "artists" | "tracks"
+
+    type PaginationParams = {
+        limit?: number
+        offset?: number
+    }
 
     const getAccessToken = useCallback(async (): Promise<string> => {
         if (accessTokenRef.current) {
@@ -104,7 +116,7 @@ export const useSpotify = ({
             let errorMessage = "Failed to retrieve user info"
 
             if (error instanceof Error) {
-                errorMessage += `: ${error.message}`;
+                errorMessage += `: ${error.message}`
             } else if (typeof error === "string") {
                 errorMessage += `: ${error}`
             } else {
@@ -116,7 +128,7 @@ export const useSpotify = ({
         }
     }, [getAccessToken])
 
-    const getPlaylists = useCallback(async (user_id: string, limit?: number, offset?: number): Promise<SpotifyPlaylist[]> => {
+    const getPlaylists = useCallback(async (user_id: string, paginationParams?: PaginationParams): Promise<SpotifyPlaylist[]> => {
         try {
             const access_token = await getAccessToken()
 
@@ -127,6 +139,8 @@ export const useSpotify = ({
             if (!user_id || user_id.trim() === "") {
                 throw new Error(`Invalid user ID: Expected a non-empty string, but received ${JSON.stringify(user_id)}`)
             }
+
+            const { limit, offset } = paginationParams || {}
 
             if (limit && ((limit < 0 || limit > 50))) {
                 throw new Error(`Invalid limit value: Expected to be between 0 and 50, but recieved ${limit}`)
@@ -148,7 +162,7 @@ export const useSpotify = ({
                 throw new Error(`Failed to fetch playlists: ${response.status} ${response.statusText}`)
             }
     
-            const data: PlaylistsResponse = await response.json()
+            const data: SpotifyPlaylistsResponse = await response.json()
             return data.items
         } catch (error) {
             let errorMessage = `Failed to retrieve playlists for user ${user_id || "${userId}"}`
@@ -188,7 +202,7 @@ export const useSpotify = ({
                 throw new Error(`Failed to fetch playlist tracks: ${response.status} ${response.statusText}`)
             }
         
-            const data: PlaylistSongsResponse = await response.json()
+            const data: SpotifyPlaylistSongsResponse = await response.json()
             return data.items
         } catch (error) {
             let errorMessage = `Failed to retrieve tracks for playlist ${playlist_id || "${id}"}`
@@ -226,7 +240,7 @@ export const useSpotify = ({
                 throw new Error(`Failed to fetch currently playing song: ${response.status} ${response.statusText}`)
             }
         
-            const data: CurrentlyPlayingResponse = await response.json()
+            const data: SpotifyCurrentlyPlayingResponse = await response.json()
             return data.item
         } catch (error) {
             let errorMessage = "Failed to retrieve currently playing song"
@@ -240,6 +254,57 @@ export const useSpotify = ({
             }
             
             console.error("Error fetching currently playing song:", error)
+            throw new Error(errorMessage)
+        }
+    }, [getAccessToken])
+
+    const getUserTopItems = useCallback(async <T extends TopItemType>(type: T, paginationParams?: PaginationParams): Promise<T extends "artists" ? SpotifyTopArtist[] : SpotifyTopTrack[]> => {
+        try {
+            const access_token = await getAccessToken()
+            if (!access_token) {
+                throw new Error("Access token is missing or invalid")
+            }
+
+            if (type !== "artists" && type !== "tracks") {
+                throw new Error(`Invalid type parameter: ${type}. Must be 'artists' or 'tracks'`)
+            }
+
+            const { limit, offset } = paginationParams || {}
+
+            if (limit && ((limit < 0 || limit > 50))) {
+                throw new Error(`Invalid limit value: Expected to be between 0 and 50, but recieved ${limit}`)
+            }
+
+            if (offset && (offset < 0)) {
+                throw new Error(`Invalid offset value: Expected to be greater than 0, but recieved ${offset}`)
+            }
+           
+            const response = await fetch(`
+                ${SPOTIFY_REST_URL}/v1/me/top/${type}?limit=${limit ? limit : 20}&offset=${offset ? offset : 0}
+            `, {
+                headers: {
+                    "Authorization": `Bearer ${access_token}`,
+                },
+            })
+    
+            if (!response.ok) {
+                throw new Error(`Failed to fetch top items: ${response.status} ${response.statusText}`)
+            }
+    
+            const data: T extends "artists" ? SpotifyTopArtistsResponse : SpotifyTopTracksResponse = await response.json()
+            return data.items as T extends "artists" ? SpotifyTopArtist[] : SpotifyTopTrack[]
+        } catch (error) {
+            let errorMessage = "Failed to retrieve top items"
+
+            if (error instanceof Error) {
+                errorMessage += `: ${error.message}`
+            } else if (typeof error === "string") {
+                errorMessage += `: ${error}`
+            } else {
+                errorMessage += ": An unknown error occurred"
+            }
+            
+            console.error("Error fetching top items:", error)
             throw new Error(errorMessage)
         }
     }, [getAccessToken])
@@ -272,7 +337,7 @@ export const useSpotify = ({
                         throw new Error(`Failed to search songs: ${response.status} ${response.statusText}`)
                     }
            
-                    const data: SearchSongsResponse = await response.json()
+                    const data: SpotifySearchSongsResponse = await response.json()
                     resolve(data.tracks.items)
                 } catch (error) {
                     let errorMessage = "Failed to search songs"
@@ -297,6 +362,7 @@ export const useSpotify = ({
         getPlaylists,
         getPlaylistSongs,
         getCurrentlyPlayingSong,
+        getUserTopItems,
         searchSongs
     }
 }

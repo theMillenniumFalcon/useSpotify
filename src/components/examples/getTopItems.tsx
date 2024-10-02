@@ -5,20 +5,24 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism"
 
 const codeString = `import React, { useState } from "react";
-import { useSpotify, SpotifyPlaylist } from "usespotify-react";
+import { useSpotify, SpotifyTopTrack, SpotifyTopArtist } from "usespotify-react";
 
-export const GetPlaylists = () => {
-    const { getPlaylists } = useSpotify({ client_id, client_secret, refresh_token });
-    const [playlists, setPlaylists] = useState<SpotifyPlaylist[]>([]);
+export const GetAllItems = () => {
+    const client_id = process.env.CLIENT_ID as string;
+    const client_secret = process.env.CLIENT_SECRET as string;
+    const refresh_token = process.env.REFRESH_TOKEN as string;
+    
+    const { getUserTopItems } = useSpotify({ client_id, client_secret, refresh_token });
+    const [items, setItem] = useState<SpotifyTopArtist[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const handleFetchPlaylists = async () => {
+    const handleFetchItems = async () => {
         setLoading(true);
         setError(null);
         try {
-          const fetchedPlaylists = await getPlaylists(user_id, { limit: 25, offset: 5 });
-          setPlaylists(fetchedPlaylists);
+          const fetchedItems = await getUserTopItems("artists", { limit: 30, offset: 5 });
+          setItem(fetchedItems);
         } catch (err) {
           if (err instanceof Error) {
             setError(err.message);
@@ -31,25 +35,25 @@ export const GetPlaylists = () => {
     };
 
     return (
-      <div>
+        <div>
         <button
-          className="text-zinc-100 font-bold py-2 px-4 rounded border border-zinc-500"
-          onClick={handleFetchPlaylists}
-          disabled={loading}
+            className="text-zinc-100 font-bold py-2 px-4 rounded border border-zinc-500"
+            onClick={handleFetchItems}
+            disabled={loading}
         >
-          {loading ? 'Fetching...' : 'Fetch Playlists'}
+            {loading ? 'Fetching...' : 'Fetch Items'}
         </button>
         <ul className="mt-4 text-sm font-normal text-zinc-300">
-          {error && <div>Error: {error}</div>}
-          {playlists.map((playlist) => (
-            <li key={playlist.id}>{playlist.name}</li>
-          ))}
+            {error && <div>Error: {error}</div>}
+            {items.map((item) => (
+            <li key={item.id}>{item.name}</li>
+            ))}
         </ul>
-      </div>
+        </div>
     )
 }`
 
-export const GetPlaylists = () => {
+export const GetTopItems = () => {
   return (
     <div className="bg-white/[.1] px-1 rounded mt-1 mb-6">
       <SyntaxHighlighter

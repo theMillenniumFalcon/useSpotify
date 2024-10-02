@@ -15,6 +15,7 @@ const {
     getPlaylists,
     getPlaylistSongs,
     getCurrentlyPlayingSong,
+    getUserTopItems
     searchSongs
 } = useSpotify({
     client_id: 'your_spotify_client_id',
@@ -27,7 +28,7 @@ const {
 - `getUserInfo(): Promise<SpotifyUserProfile>`
     Fetch the Spotify profile information of the authenticated user.
 
-- `getPlaylists(user_id: string, limit?: number, offset?: number): Promise<SpotifyPlaylist[]>`
+- `getPlaylists(user_id: string, { limit?: number, offset?: number }): Promise<SpotifyPlaylist[]>`
     Fetch the playlists of a specified user, with optional limit and offset for pagination.
     - `user_id` (string, required): The Spotify user ID.
     - `limit` (number, optional): Number of playlists to retrieve (default is 20, max is 50).
@@ -39,6 +40,9 @@ const {
 
 - `getCurrentlyPlayingSong(): Promise<SpotifyTrack | null>`
     Fetch the currently playing song for the authenticated user. Returns null if no song is playing.
+
+- `getUserTopItems"artists" | "tracks", { limit?: number, offset?: number }): Promise<SpotifyTopArtist[] | SpotifyTopTrack[]>`
+    Fetch the top artists and tracks for the user.
 
 - `searchSongs(search_query: string, debounce_timer?: number): Promise<SpotifySearchTrack[]>`
     Search for songs on Spotify based on the query string, with an optional debounce timer.

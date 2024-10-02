@@ -3,6 +3,8 @@
 import React from "react"
 import Link from "next/link"
 import { RiArrowRightUpLine } from "react-icons/ri"
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism"
 
 import { GetPlaylists } from "@/components/examples/getPlaylists"
 import { GetCurrentlyPlayingSong } from "@/components/examples/getCurrentlyPlayingSong"
@@ -12,6 +14,7 @@ import { Installation } from "@/components/installation"
 import { Signature } from "@/components/signature"
 // import { Example } from "@/components/example"
 import { GetUserInfo } from "@/components/examples/getUserInfo"
+import { GetTopItems } from "@/components/examples/getTopItems"
 
 export default function Home() {
   return (
@@ -51,6 +54,8 @@ export default function Home() {
             <Link href="#user-info" className="underline underline-offset-4">
               Get User Info
             </Link>
+            {" "}
+            <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">new</code>
           </p>
           <p className="text-xs md:text-sm mb-2">
             <Link href="#all-playlists" className="underline underline-offset-4">
@@ -66,6 +71,13 @@ export default function Home() {
             <Link href="#currently-playing-song" className="underline underline-offset-4">
               Get the Currently Playing Song
             </Link>
+          </p>
+          <p className="text-xs md:text-sm mb-2">
+            <Link href="#top-artists-and-tracks" className="underline underline-offset-4">
+              Get Top Artists and Tracks of the User
+            </Link>
+            {" "}
+            <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">new</code>
           </p>
           <p className="text-xs md:text-sm">
             <Link href="#search-songs" className="underline underline-offset-4">
@@ -100,13 +112,52 @@ export default function Home() {
             </li>
           </ol>
           <h3 className="text-sm md:text-base">• Return Values:</h3>
-          <ol className="list-inside list-decimal my-2 mx-3 text-xs md:text-sm text-left font-[family-name:var(--font-geist-mono)]">
+          <div className="flex flex-col space-y-2 my-2">
+            <div className="bg-white/[.1] px-1 rounded mt-1">
+              <SyntaxHighlighter
+                language="typescript"
+                style={atomDark}
+                customStyle={{
+                  margin: 0,
+                  padding: '8px 12px',
+                  fontSize: '0.875rem',
+                  lineHeight: '1.25rem',
+                  backgroundColor: 'transparent',
+                }}
+                wrapLines={true}
+                wrapLongLines={true}
+              >
+                {`type TopItemType = "artists" | "tracks"`}
+              </SyntaxHighlighter>
+            </div>
+            <div className="bg-white/[.1] px-1 rounded mt-1">
+              <SyntaxHighlighter
+                language="typescript"
+                style={atomDark}
+                customStyle={{
+                  margin: 0,
+                  padding: '8px 12px',
+                  fontSize: '0.875rem',
+                  lineHeight: '1.25rem',
+                  backgroundColor: 'transparent',
+                }}
+                wrapLines={true}
+                wrapLongLines={true}
+              >
+                {`type PaginationParams = { 
+  limit?: number;
+  offset?: number;
+}`}
+              </SyntaxHighlighter>
+            </div>
+          </div>
+          <ol className="list-inside list-decimal my-4 mx-3 text-xs md:text-sm text-left font-[family-name:var(--font-geist-mono)]">
             <li className="mb-4">
               <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">{`getUserInfo(): Promise<SpotifyUserProfile>`}</code>:
               Returns the User Info.
             </li>
             <li className="mb-4">
-              <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">{`getPlaylists(user_id: string, limit?: number, offset?: number): Promise<SpotifyPlaylist[]>`}</code>:
+              <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">{`getPlaylists(user_id: string, paginationParams?: PaginationParams): Promise<SpotifyPlaylist[]>`}</code>:
               Returns all playlists of a given user.
             </li>
             <li className="mb-4">
@@ -118,6 +169,10 @@ export default function Home() {
               Returns the song currently playing for the user.
             </li>
             <li className="mb-4">
+              <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">{`getUserTopItems<T extends TopItemType>(type: T, paginationParams?: PaginationParams): Promise<T extends "artists" ? SpotifyTopArtist[] : SpotifyTopTrack[]>`}</code>:
+              Returns the song currently playing for the user.
+            </li>
+            <li>
               <code className="bg-white/[.1] px-1 py-0.5 rounded font-semibold">{`searchSongs(search_query: string, debounce_timer?: number): Promise<SpotifySearchTrack[]>`}</code>:
               Returns an array of songs as per user query.
             </li>
@@ -146,6 +201,8 @@ export default function Home() {
           <GetPlaylistSongs />
           <h3 id="currently-playing-song" className="text-sm md:text-base mt-10">• To get the Currently Playing Song:</h3>
           <GetCurrentlyPlayingSong />
+          <h3 id="top-artists-and-tracks" className="text-sm md:text-base mt-10">• To get Top Artists and Tracks of the User:</h3>
+          <GetTopItems />
           <h3 id="search-songs" className="text-sm md:text-base mt-10">• Search for songs:</h3>
           <SearchSongs />
         </section>

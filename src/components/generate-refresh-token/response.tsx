@@ -13,7 +13,7 @@ export const Response = () => {
     "token_type": "Bearer",
     "expires_in": 3600,
     "refresh_token": "AQD...w-e4",
-    "scope": "user-read-currently-playing"
+    "scope": "<your_desired_scope>"
 }`}
             </div>
       </code>

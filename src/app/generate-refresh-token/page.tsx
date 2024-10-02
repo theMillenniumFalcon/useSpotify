@@ -59,6 +59,15 @@ export default function GenerateRefreshToken() {
                     Now we need to generate refresh token, which will further be used to generate access token, copy and paste
                     the below code in your desired browser.
                     <Generate />
+                    The scope has to be defined according to the requirement, further details can be referenced from{" "}
+                    <a
+                        href="https://developer.spotify.com/documentation/web-api/concepts/scopes"
+                        rel="noopenner noreferrer"
+                        target="_blank"
+                        className="underline underline-offset-4"
+                    >
+                        here
+                    </a>.
                 </li>
                 <li className="mb-6">
                     Authorize spotify to access your application, after that you be redirected
